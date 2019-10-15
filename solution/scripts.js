@@ -36,9 +36,10 @@ buttonDragDrawer.addEventListener("touchmove", e => {
     return;
   }
 
-  //window.requestAnimationFrame(() => {
-  drawerContent.style.transform = `translateY(${-dragDeltaY}px)`;
-  // });
+  window.requestAnimationFrame(() => {
+    drawerContent.style.transition = "none";
+    drawerContent.style.transform = `translateY(${-dragDeltaY}px)`;
+  });
 });
 
 buttonDragDrawer.addEventListener("touchend", e => {
