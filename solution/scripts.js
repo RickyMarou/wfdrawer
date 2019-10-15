@@ -43,6 +43,7 @@ buttonDragDrawer.addEventListener("touchmove", e => {
 });
 
 buttonDragDrawer.addEventListener("touchend", e => {
+  drawerContent.style.transition = "";
   const drawerContentHeight = drawerContent.getBoundingClientRect().height;
   if (Math.abs(dragDeltaY) > drawerContentHeight / 2) {
     drawerContent.style.transform = "";

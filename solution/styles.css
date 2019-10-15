@@ -14,13 +14,6 @@ body {
   overscroll-behavior: none;
 }
 
-.scroll-container {
-  width: 100vw;
-  height: 100vh;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-}
-
 .drawer-visible {
   overflow: hidden;
   position: fixed;
@@ -39,7 +32,7 @@ main {
 .drawer-container {
   visibility: hidden;
   pointer-events: none;
-  position: fixed;
+  position: absolute;
   z-index: 10;
   top: 0;
   left: 0;
@@ -93,7 +86,7 @@ main {
 }
 
 .drawer-drag {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
