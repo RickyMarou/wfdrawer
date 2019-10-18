@@ -59,3 +59,28 @@ const closeDrawerElements = Array.from(
 closeDrawerElements.map(closeDrawerElement => {
   closeDrawerElement.addEventListener("click", closeDrawer);
 });
+
+/* velocity calc */
+
+let touchStartY;
+let touchStartTime;
+
+// prevent propagation on scroll container
+
+drawerContainer.addEventListener("touchstart", e => {
+  touchStartTime = new Date();
+  touchStartY = e.touches[0].screenY;
+});
+
+drawerContainer.addEventListener("touchmove", e => {
+  const distance = touchStartY - e.touches[0].screenY;
+  if (distance >= 0) {
+    return;
+  }
+  const elapsedTime = new Date() - touchStartTime;
+  const velocity = Math.abs(distance / elapsedTime); // px / ms
+  console.log({ velocity });
+  if (velocity >= 0.5) {
+    closeDrawer();
+  }
+});
