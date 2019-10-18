@@ -10,12 +10,16 @@ const openDrawer = () => {
 };
 
 const closeDrawer = e => {
+  if (drawerContainer.classList.contains("drawer-closing")) {
+    return;
+  }
   drawerContainer.addEventListener("transitionend", hideDrawer);
   drawerContainer.classList.add("drawer-closing");
 };
 
 const hideDrawer = () => {
   document.body.classList.remove("drawer-visible");
+  drawerContainer.classList.remove("drawer-closing");
 };
 
 drawerContainer.addEventListener("click", closeDrawer);
@@ -30,6 +34,7 @@ buttonDragDrawer.addEventListener("touchstart", e => {
 });
 
 buttonDragDrawer.addEventListener("touchmove", e => {
+  e.stopImmediatePropagation();
   const touch = e.touches[0];
   dragDeltaY = dragStartY - e.touches[0].screenY;
   if (dragDeltaY > 0) {
@@ -61,26 +66,35 @@ closeDrawerElements.map(closeDrawerElement => {
 });
 
 /* velocity calc */
-
 let touchStartY;
 let touchStartTime;
 
-// prevent propagation on scroll container
+// TODO: prevent propagation on scroll container, but only if the touche started
+// inside it and it has scrolling content
 
 drawerContainer.addEventListener("touchstart", e => {
+  if (!document.body.classList.contains("drawer-visible")) {
+    return;
+  }
   touchStartTime = new Date();
   touchStartY = e.touches[0].screenY;
 });
 
 drawerContainer.addEventListener("touchmove", e => {
+  if (!document.body.classList.contains("drawer-visible")) {
+    return;
+  }
+
   const distance = touchStartY - e.touches[0].screenY;
   if (distance >= 0) {
     return;
   }
+
   const elapsedTime = new Date() - touchStartTime;
   const velocity = Math.abs(distance / elapsedTime); // px / ms
   console.log({ velocity });
   if (velocity >= 0.5) {
+    console.log("swipe close");
     closeDrawer();
   }
 });

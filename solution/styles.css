@@ -12,6 +12,7 @@ body {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: none;
+  transform: translateZ(0);
 }
 
 .drawer-visible {
